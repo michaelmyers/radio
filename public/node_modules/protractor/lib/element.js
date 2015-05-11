@@ -51,7 +51,7 @@ var WEB_ELEMENT_FUNCTIONS = [
  * });
  *
  * @constructor
- * @param {Protractor} ptor A protractor instance. 
+ * @param {Protractor} ptor A protractor instance.
  * @param {function(): Array.<webdriver.WebElement>} getWebElements A function
  *    that returns a list of the underlying Web Elements.
  * @param {webdriver.Locator} locator The most relevant locator. It is only
@@ -62,7 +62,7 @@ var WEB_ELEMENT_FUNCTIONS = [
  * @return {ElementArrayFinder}
  */
 var ElementArrayFinder = function(ptor, getWebElements, locator, opt_actionResults) {
-  this.ptor_ = ptor; 
+  this.ptor_ = ptor;
   this.getWebElements = getWebElements || null;
   this.actionResults_ = opt_actionResults;
   this.locator_ = locator;
@@ -92,7 +92,7 @@ ElementArrayFinder.prototype.clone = function() {
   // modified. (Locator can be modified by the user, but that should
   // rarely/never happen and it doesn't affect functionalities).
   return new ElementArrayFinder(
-    this.ptor_, this.getWebElements, this.locator_, this.actionResults_); 
+    this.ptor_, this.getWebElements, this.locator_, this.actionResults_);
 };
 
 /**
@@ -143,7 +143,7 @@ ElementArrayFinder.prototype.all = function(locator) {
     } else {
       return self.getWebElements().then(function(parentWebElements) {
         var childrenPromiseList = [];
-        // For each parent web element, find their children and construct a 
+        // For each parent web element, find their children and construct a
         // list of Promise<List<child_web_element>>
         parentWebElements.forEach(function(parentWebElement) {
           var childrenPromise = locator.findElementsOverride ?
@@ -194,7 +194,7 @@ ElementArrayFinder.prototype.all = function(locator) {
  *   filteredElements[0].click();
  * });
  *
- * @param {function(ElementFinder, number): webdriver.WebElement.Promise} filterFn 
+ * @param {function(ElementFinder, number): webdriver.WebElement.Promise} filterFn
  *     Filter function that will test if an element should be returned.
  *     filterFn can either return a boolean or a promise that resolves to a boolean.
  * @return {!ElementArrayFinder} A ElementArrayFinder that represents an array
@@ -206,8 +206,8 @@ ElementArrayFinder.prototype.filter = function(filterFn) {
     return self.getWebElements().then(function(parentWebElements) {
       var list = [];
       parentWebElements.forEach(function(parentWebElement, index) {
-        var elementFinder = 
-            ElementFinder.fromWebElement_(parentWebElement, self.locator_);
+        var elementFinder =
+            ElementFinder.fromWebElement_(self.ptor_, parentWebElement, self.locator_);
 
         var filterResults = filterFn(elementFinder, index);
         if (filterResults instanceof webdriver.promise.Promise) {
@@ -246,20 +246,21 @@ ElementArrayFinder.prototype.filter = function(filterFn) {
  *
  * @param {number} index Element index.
  * @return {ElementFinder} finder representing element at the given index.
- */ 
+ */
 ElementArrayFinder.prototype.get = function(index) {
   var self = this;
   var getWebElements = function() {
     return self.getWebElements().then(function(parentWebElements) {
-      var i = index; 
+      var i = index;
       if (i < 0) {
         // wrap negative indices
         i = parentWebElements.length + i;
       }
       if (i < 0 || i >= parentWebElements.length) {
         throw new Error('Index out of bound. Trying to access element at ' +
-            'index:' + index + ', but there are only ' +
-            parentWebElements.length + ' elements');
+            'index: ' + index + ', but there are only ' +
+            parentWebElements.length + ' elements that match locator ' +
+            self.locator_.toString());
       }
       return [parentWebElements[i]];
     });
@@ -403,17 +404,17 @@ ElementArrayFinder.prototype.applyAction_ = function(actionFn) {
 /**
  * Represents the ElementArrayFinder as an array of ElementFinders.
  *
- * @return {Array.<ElementFinder>} Return a promise, which resolves to a list 
+ * @return {Array.<ElementFinder>} Return a promise, which resolves to a list
  *     of ElementFinders specified by the locator.
  */
 ElementArrayFinder.prototype.asElementFinders_ = function() {
-  var self = this; 
+  var self = this;
   return this.getWebElements().then(function(arr) {
     var list = [];
     arr.forEach(function(webElem) {
-      list.push(ElementFinder.fromWebElement_(webElem, self.locator_));
+      list.push(ElementFinder.fromWebElement_(self.ptor_, webElem, self.locator_));
     });
-    return list; 
+    return list;
   });
 };
 
@@ -461,9 +462,11 @@ ElementArrayFinder.prototype.then = function(fn, errorFn) {
  * </ul>
  *
  * @example
- * element.all(by.css('.items li')).each(function(element) {
- *   // Will print First, Second, Third.
- *   element.getText().then(console.log);
+ * element.all(by.css('.items li')).each(function(element, index) {
+ *   // Will print 0 First, 1 Second, 2 Third.
+ *   element.getText().then(function (text) {
+ *     console.log(index, text);
+ *   });
  * });
  *
  * @param {function(ElementFinder)} fn Input function
@@ -523,11 +526,11 @@ ElementArrayFinder.prototype.map = function(mapFn) {
 };
 
 /**
- * Apply a reduce function against an accumulator and every element found 
+ * Apply a reduce function against an accumulator and every element found
  * using the locator (from left-to-right). The reduce function has to reduce
- * every element into a single value (the accumulator). Returns promise of 
- * the accumulator. The reduce function receives the accumulator, current 
- * ElementFinder, the index, and the entire array of ElementFinders, 
+ * every element into a single value (the accumulator). Returns promise of
+ * the accumulator. The reduce function receives the accumulator, current
+ * ElementFinder, the index, and the entire array of ElementFinders,
  * respectively.
  *
  * @alias element.all(locator).reduce(reduceFn)
@@ -547,11 +550,11 @@ ElementArrayFinder.prototype.map = function(mapFn) {
  *
  * expect(value).toEqual('First Second Third ');
  *
- * @param {function(number, ElementFinder, number, Array.<ElementFinder>)} 
+ * @param {function(number, ElementFinder, number, Array.<ElementFinder>)}
  *     reduceFn Reduce function that reduces every element into a single value.
- * @param {*} initialValue Initial value of the accumulator. 
+ * @param {*} initialValue Initial value of the accumulator.
  * @return {!webdriver.promise.Promise} A promise that resolves to the final
- *     value of the accumulator. 
+ *     value of the accumulator.
  */
 ElementArrayFinder.prototype.reduce = function(reduceFn, initialValue) {
   var valuePromise = webdriver.promise.fulfilled(initialValue);
@@ -616,17 +619,17 @@ ElementArrayFinder.prototype.allowAnimations = function(value) {
  * anything that can be done with an ElementFinder, can also be done using
  * an ElementArrayFinder.
  *
- * The ElementFinder can be treated as a WebElement for most purposes, in 
+ * The ElementFinder can be treated as a WebElement for most purposes, in
  * particular, you may perform actions (i.e. click, getText) on them as you
- * would a WebElement. ElementFinders extend Promise, and once an action 
- * is performed on an ElementFinder, the latest result from the chain can be 
+ * would a WebElement. ElementFinders extend Promise, and once an action
+ * is performed on an ElementFinder, the latest result from the chain can be
  * accessed using then. Unlike a WebElement, an ElementFinder will wait for
  * angular to settle before performing finds or actions.
  *
  * ElementFinder can be used to build a chain of locators that is used to find
- * an element. An ElementFinder does not actually attempt to find the element 
- * until an action is called, which means they can be set up in helper files 
- * before the page is available. 
+ * an element. An ElementFinder does not actually attempt to find the element
+ * until an action is called, which means they can be set up in helper files
+ * before the page is available.
  *
  * @alias element(locator)
  * @view
@@ -661,7 +664,7 @@ var ElementFinder = function(ptor, elementArrayFinder) {
   this.ptor_ = ptor;
   this.parentElementArrayFinder = elementArrayFinder;
 
-  // This filter verifies that there is only 1 element returned by the 
+  // This filter verifies that there is only 1 element returned by the
   // elementArrayFinder. It will warn if there are more than 1 element and
   // throw an error if there are no elements.
   var getWebElements = function() {
@@ -702,11 +705,11 @@ util.inherits(ElementFinder, webdriver.promise.Promise);
 
 exports.ElementFinder = ElementFinder;
 
-ElementFinder.fromWebElement_ = function(webElem, locator) {
+ElementFinder.fromWebElement_ = function(ptor, webElem, locator) {
   var getWebElements = function() {
     return webdriver.promise.fulfilled([webElem]);
   };
-  return new ElementArrayFinder(this.ptor_, getWebElements, locator).
+  return new ElementArrayFinder(ptor, getWebElements, locator).
       toElementFinder_();
 };
 
@@ -717,8 +720,8 @@ ElementFinder.fromWebElement_ = function(webElem, locator) {
  */
 ElementFinder.prototype.clone = function() {
   // A shallow copy is all we need since the underlying fields can never be
-  // modified 
-  return new ElementFinder(this.ptor_, this.parentElementArrayFinder); 
+  // modified
+  return new ElementFinder(this.ptor_, this.parentElementArrayFinder);
 };
 
 /**
@@ -758,7 +761,7 @@ ElementFinder.prototype.getWebElement = function() {
  * @param {function(webdriver.promise.Promise)} fn Function which takes
  *     the value of the underlying actionResult.
  *
- * @return {webdriver.promise.Promise} Promise which contains the results of 
+ * @return {webdriver.promise.Promise} Promise which contains the results of
  *     evaluating fn.
  */
 ElementFinder.prototype.then = function(fn, errorFn) {
@@ -770,8 +773,9 @@ ElementFinder.prototype.then = function(fn, errorFn) {
   }, errorFn);
 };
 
-/** 
- * Calls to element may be chained to find an array of elements within a parent.
+/**
+ * Calls to {@code all} may be chained to find an array of elements within a
+ * parent.
  *
  * @alias element(locator).all(locator)
  * @view
@@ -794,7 +798,7 @@ ElementFinder.prototype.all = function(subLocator) {
 };
 
 /**
- * Calls to element may be chained to find elements within a parent.
+ * Calls to {@code element} may be chained to find elements within a parent.
  *
  * @alias element(locator).element(locator)
  * @view
@@ -825,50 +829,55 @@ ElementFinder.prototype.element = function(subLocator) {
 };
 
 /**
- * Shortcut for querying the document directly with css.
+ * Calls to {@code $$} may be chained to find an array of elements within a
+ * parent.
  *
- * @alias $$(cssSelector)
+ * @alias element(locator).all(selector)
  * @view
- * <div class="count">
- *   <span class="one">First</span>
- *   <span class="two">Second</span>
+ * <div class="parent">
+ *   <ul>
+ *     <li class="one">First</li>
+ *     <li class="two">Second</li>
+ *     <li class="three">Third</li>
+ *   </ul>
  * </div>
  *
  * @example
- * // The following protractor expressions are equivalent.
- * var list = element.all(by.css('.count span'));
- * expect(list.count()).toBe(2);
- *
- * list = $$('.count span');
- * expect(list.count()).toBe(2);
- * expect(list.get(0).getText()).toBe('First');
- * expect(list.get(1).getText()).toBe('Second');
+ * var items = element(by.css('.parent')).$$('li')
  *
  * @param {string} selector a css selector
- * @return {ElementArrayFinder} which identifies the
- *     array of the located {@link webdriver.WebElement}s.
+ * @return {ElementArrayFinder}
  */
 ElementFinder.prototype.$$ = function(selector) {
   return this.all(webdriver.By.css(selector));
 };
 
 /**
- * Shortcut for querying the document directly with css.
+ * Calls to {@code $} may be chained to find elements within a parent.
  *
- * @alias $(cssSelector)
+ * @alias element(locator).$(selector)
  * @view
- * <div class="count">
- *   <span class="one">First</span>
- *   <span class="two">Second</span>
+ * <div class="parent">
+ *   <div class="child">
+ *     Child text
+ *     <div>{{person.phone}}</div>
+ *   </div>
  * </div>
  *
  * @example
- * var item = $('.count .two');
- * expect(item.getText()).toBe('Second');
+ * // Chain 2 element calls.
+ * var child = element(by.css('.parent')).
+ *     $('.child');
+ * expect(child.getText()).toBe('Child text\n555-123-4567');
+ *
+ * // Chain 3 element calls.
+ * var triple = element(by.css('.parent')).
+ *     $('.child').
+ *     element(by.binding('person.phone'));
+ * expect(triple.getText()).toBe('555-123-4567');
  *
  * @param {string} selector A css selector
- * @return {ElementFinder} which identifies the located
- *     {@link webdriver.WebElement}
+ * @return {ElementFinder}
  */
 ElementFinder.prototype.$ = function(selector) {
   return this.element(webdriver.By.css(selector));
@@ -899,7 +908,7 @@ ElementFinder.prototype.isPresent = function() {
 /**
  * Override for WebElement.prototype.isElementPresent so that protractor waits
  * for Angular to settle before making the check.
- * 
+ *
  * @see ElementFinder.isPresent
  *
  * @param {webdriver.Locator} subLocator Locator for element to look for.
@@ -942,3 +951,59 @@ ElementFinder.prototype.allowAnimations = function(value) {
 ElementFinder.prototype.isPending = function() {
   return false;
 };
+
+/**
+ * Shortcut for querying the document directly with css.
+ *
+ * @alias $(cssSelector)
+ * @view
+ * <div class="count">
+ *   <span class="one">First</span>
+ *   <span class="two">Second</span>
+ * </div>
+ *
+ * @example
+ * var item = $('.count .two');
+ * expect(item.getText()).toBe('Second');
+ *
+ * @param {string} selector A css selector
+ * @return {ElementFinder} which identifies the located
+ *     {@link webdriver.WebElement}
+ */
+var build$ = function(element, by) {
+  return function(selector) {
+    return element(by.css(selector));
+  };
+};
+exports.build$ = build$;
+
+/**
+ * Shortcut for querying the document directly with css.
+ *
+ * @alias $$(cssSelector)
+ * @view
+ * <div class="count">
+ *   <span class="one">First</span>
+ *   <span class="two">Second</span>
+ * </div>
+ *
+ * @example
+ * // The following protractor expressions are equivalent.
+ * var list = element.all(by.css('.count span'));
+ * expect(list.count()).toBe(2);
+ *
+ * list = $$('.count span');
+ * expect(list.count()).toBe(2);
+ * expect(list.get(0).getText()).toBe('First');
+ * expect(list.get(1).getText()).toBe('Second');
+ *
+ * @param {string} selector a css selector
+ * @return {ElementArrayFinder} which identifies the
+ *     array of the located {@link webdriver.WebElement}s.
+ */
+var build$$ = function(element, by) {
+  return function(selector) {
+    return element.all(by.css(selector));
+  };
+};
+exports.build$$ = build$$;

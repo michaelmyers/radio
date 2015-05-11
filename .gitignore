@@ -34,5 +34,9 @@ server.pid
 /dist/
 .cache
 
-#prod conf
+# prod conf
 *.prod.conf
+
+#browser depedencies
+/public/node_modules
+/public/components

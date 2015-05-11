@@ -6,7 +6,13 @@ This file will be packaged with your application, when using `activator dist`.
 ## Dependencies
 
 `npm`
-activator `brew install typesafe-activator`
+activator
+`brew install typesafe-activator`
+
+## Install Public Dependencies
+
+`cd public`
+`npm install`
 
 ## Developing
 
@@ -48,7 +54,7 @@ jasmine references: http://jasmine.github.io/2.2/introduction.html
 Play automatically generates them for you (https://www.playframework.com/documentation/2.3.x/JavaEbean),
 only write them if needed.
 
-## The API 
+## The API
 
 ### Versioning
 

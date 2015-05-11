@@ -1,0 +1,22 @@
+<div class="row name-row">
+    <div class="col-sm-1">
+        <h4 class="name text-right">{{genre.id}}</h4>
+    </div>
+    <div class="col-sm-8">
+        <h4 class="name text-left">{{genre.name}}</h4>
+    </div>
+    <div class="col-sm-3 text-center" ng-if="genre.parentGenre">
+        <a href="/admin/genres/{{genre.parentGenre.id}}"><p class="text-center">{{genre.parentGenre.name}}</p></a>
+    </div>
+</div>
+
+<dl class="dl-horizontal">
+    <dt>Added Date</dt>
+    <dd>{{genre.creationDate | date : 'mediumDate'}}</dd>
+    <dt>Apple Genre ID</dt>
+    <dd>{{genre.appleGenreId}}</dd>
+    <dt>Description</dt>
+    <dd>{{genre.description}}</dd>
+</dl>
+
+<co-episode-list genre="genre.id"></co-episode-list>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="Chrome 42.0.2311 (Mac OS X 10.10.3)" package="unit" timestamp="2015-05-08T15:08:49" id="0" hostname="Michaels-Server.local">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36"/>
+    </properties>
+  </testsuite>
+  <testsuite name="Chrome 42.0.2311 (Mac OS X 10.10.3)" package="unit" timestamp="2015-05-08T15:08:49" id="0" hostname="Michaels-Server.local" tests="23" errors="0" failures="0" time="0.151">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36"/>
+    </properties>
+    <testcase name="can get an instance of AuthService" time="0.01" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).auth"/>
+    <testcase name="is instantiated correctly" time="0.005" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).auth"/>
+    <testcase name="can create a user" time="0.005" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).auth"/>
+    <testcase name="can login" time="0.005" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).auth"/>
+    <testcase name="can logout" time="0.004" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).auth"/>
+    <testcase name="can get an instance of EpisodeService" time="0.008" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).episode service"/>
+    <testcase name="can get episodes with query" time="0.006" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).episode service"/>
+    <testcase name="can get a single episode by id" time="0.005" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).episode service"/>
+    <testcase name="can get a page of episodes" time="0.009" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).episode service"/>
+    <testcase name="can get episode count" time="0.005" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).episode service"/>
+    <testcase name="can get an instance" time="0.018" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).episode  list controller"/>
+    <testcase name="can get an instance" time="0.005" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).episode  controller"/>
+    <testcase name="replaces element with proper content" time="0.021" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).episode directive"/>
+    <testcase name="makes correct query for show" time="0.015" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).episode directive"/>
+    <testcase name="can get an instance of ShowService" time="0.003" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).show"/>
+    <testcase name="can get shows with query" time="0.003" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).show"/>
+    <testcase name="can get a single show by id" time="0.003" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).show"/>
+    <testcase name="can import a show" time="0.004" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).show"/>
+    <testcase name="can get an instance" time="0.004" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).user service"/>
+    <testcase name="can get users with query" time="0.004" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).user service"/>
+    <testcase name="can get an instance" time="0.003" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).user user controller"/>
+    <testcase name="can get an instance" time="0.003" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).user profile controller"/>
+    <testcase name="can save the user " time="0.003" classname="unit Chrome 42.0.2311 (Mac OS X 10.10.3).user profile controller"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+</testsuites>

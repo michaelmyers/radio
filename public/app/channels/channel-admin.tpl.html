@@ -1,0 +1,23 @@
+<div class="row name-row">
+    <div class="col-sm-1">
+        <h4 class="name text-right">{{channel.id}}</h4>
+    </div>
+    <div class="col-sm-8">
+        <h4 class="name text-left">{{channel.name}}</h4>
+    </div>
+</div>
+
+<dl class="dl-horizontal">
+    <dt>Added Date</dt>
+    <dd>{{channel.creationDate | date : 'mediumDate'}}</dd>
+    <dt>Genre</dt>
+    <dd>{{channel.genre.name}}</dd>
+    <dt>Tags</dt>
+    <dd>
+        <ul class="list-inline">
+            <li ng-repeat="tag in channel.tags"><p class="tag">{{tag.name}}</p></li>
+        </ul>
+    </dd>
+</dl>
+
+<co-episode-list channel="channel.id"></co-episode-list>

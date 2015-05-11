@@ -1,0 +1,218 @@
+/* Started with Narrow Jumbotron Example http://getbootstrap.com/examples/jumbotron-narrow/# */
+
+.pull-left {
+  float: left !important;
+}
+.pull-right {
+  float: right !important;
+}
+
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  padding-bottom: 5px;
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+}
+
+.nav-email {
+   padding: 10px 15px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+  text-align: center;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  padding: 14px 24px;
+  font-size: 21px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+/** Explicit Styles */
+.explicit {
+    color: white;
+    background-color: red;
+    padding: 2px;
+    margin: 0px;
+    width: 65px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    font-size: 10px;
+}
+
+/** Tag Styles */
+.tag {
+    color: white;
+    background-color: darkgrey;
+    padding: 2px;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    font-size: 12px;
+}
+
+/** Episode List Directive Styles */
+
+.episode-directive .pagination {
+    margin: 8px 0px;
+}
+
+/** Admin Styles */
+
+.name {
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.name-row {
+    margin-bottom: 10px;
+}
+
+/** Custom round buttons **/
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
+
+.btn-xl:focus {
+  border-radius: 35px;
+}
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Profile */
+.profile-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Player Controls */
+.player-controls-container {
+    /* background-color: #95a5a6;*/
+    margin-bottom: 5px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.player-controls-container .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.player-buttons-container {
+    padding: 4px 0px;
+}
+
+.player-progress-container {
+    padding: 2px 0px;
+}
+
+.player-progress {
+    height: 5px;
+    margin-bottom: 0;
+}
+
+.publisher {
+    margin: 0;
+}
+
+.show {
+    margin: 0;
+}
+
+.episode {
+    margin: 0;
+}
+
+/* Responsive: Portrait tablets and up */
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 0px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    margin-top: 15px;
+    border-bottom: 0;
+  }
+}

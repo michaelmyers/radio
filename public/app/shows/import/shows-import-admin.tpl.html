@@ -1,0 +1,12 @@
+<h2 class="sub-header">Import Show</h2>
+
+<div class="form-group row">
+    <label for="rssFeedUrl" class="col-sm-3 control-label">RSS Feed URL</label>
+    <div class="col-sm-9">
+        <input type="url" class="form-control" id="rssFeedUrl" placeholder="Input RSS Feed URL" ng-model="rssFeedUrl">
+    </div>
+</div>
+
+<div class="row">
+    <input class="btn btn-default col-sm-2 col-sm-offset-10" type="button" value="Import" ng-click="import(rssFeedUrl)">
+</div>

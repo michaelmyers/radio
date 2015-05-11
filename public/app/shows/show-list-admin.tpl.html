@@ -1,0 +1,64 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand">Shows</span>
+            <p class="navbar-text">{{showCount.count}} total</p>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <ul class="nav navbar-nav">
+                <li class=""><a href="/admin/shows/import">Import <span class="sr-only">(current)</span></a></li>
+            </ul>
+            <!--<form class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search" ng-model="search">
+                </div>
+                <button type="submit" class="btn btn-default" ng-click="searchEpisodes(search)">Submit</button>
+            </form>-->
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Network</th>
+            <th>Added</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="show in shows">
+            <td>{{show.id}}</td>
+            <td><a href="/admin/shows/{{show.id}}">{{show.name}}</a></td>
+            <td><a href="/admin/networks/{{show.network.id}}">{{show.network.name}}</a></td>
+            <td>{{show.creationDate | date:'yyyy-MM-dd'}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--<ul class="media-list">
+    <li class="media" ng-repeat="show in shows">
+        <div class="media-left">
+            <a class="pull-left" href="#">
+                <img style="height:64px; width:64px; margin-right:5px;" class="media-object" src="{{show.imageUrl}}" alt="...">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">{{show.name}}</h4>
+            {{show.description}}
+        </div>
+    </li>
+</ul> -->

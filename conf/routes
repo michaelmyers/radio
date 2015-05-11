@@ -1,0 +1,86 @@
+######
+#
+# MAIN ROUTES
+#
+######
+
+# Home
+GET     /                           controllers.ApplicationController.index(route = "none")
+# Network Access
+GET     /dashboard                  controllers.DashboardController.index(route = "none")
+# Admin Panel
+GET     /admin                      controllers.AdministrationController.index(route = "none")
+
+######
+#
+# API
+#
+######
+
+# USER API
+GET     /users                      controllers.UserController.getUsers
+GET     /users/:id                  controllers.UserController.getUser(id: Long)
+POST    /users                      controllers.UserController.createUser
+PUT     /users/:id                  controllers.UserController.updateUser(id: Long)
+DELETE  /users/:id                  controllers.UserController.deleteUser(id: Long)
+
+# NETWORK API
+GET     /networks                   controllers.NetworkController.getNetworks
+GET     /networks/count             controllers.NetworkController.count
+GET     /networks/:id               controllers.NetworkController.getNetwork(id: Long)
+POST    /networks                   controllers.NetworkController.createNetwork
+GET     /networks/:id/shows         controllers.NetworkController.getShowsForNetwork(id: Long)
+GET     /networks/:id/episodes      controllers.NetworkController.getEpisodesForNetwork(id: Long)
+
+# SHOW API
+GET     /shows                      controllers.ShowController.getShows
+GET     /shows/count                controllers.ShowController.getNumberOfDistinctShows
+GET     /shows/:id                  controllers.ShowController.getShow(id: Long)
+POST    /shows/import               controllers.ShowController.importShow
+GET     /shows/:id/episodes         controllers.ShowController.getEpisodesForShow(id: Long)
+
+# EPISODE API
+GET     /episodes                   controllers.EpisodeController.getEpisodes(network:Long ?= 0, show:Long ?= 0, genre:Long ?= 0, page:Int ?= 0, pagesize:Int ?=25, sort ?= "name", order ?= "asc", search ?= "")
+GET     /episodes/count             controllers.EpisodeController.count
+GET     /episodes/:id               controllers.EpisodeController.getEpisode(id: Long)
+
+# CHANNEL API
+GET     /channels                   controllers.ChannelController.getChannels
+GET     /channels/count             controllers.ChannelController.getNumberOfDistinctChannels
+GET     /channels/:id               controllers.ChannelController.getChannel(id: Long)
+GET     /channels/:id/episodes      controllers.ChannelController.getEpisodesForChannel(id: Long)
+POST    /channels                   controllers.ChannelController.createChannel
+
+# GENRE API
+GET     /genres                     controllers.GenreController.getGenres
+GET     /genres/count               controllers.GenreController.count
+GET     /genres/:id                 controllers.GenreController.getGenre(id: Long)
+
+# TAG API
+GET     /tags                       controllers.TagController.getTags(page:Int ?= 0, pagesize:Int ?=25, sort ?= "name", order ?= "asc", search ?= "", term ?= "")
+GET     /tags/count                 controllers.TagController.count
+GET     /tags/:id                   controllers.TagController.getTag(id: Long)
+
+# LOGIN API
+POST    /login                      controllers.AuthorizationController.login()
+POST    /logout                     controllers.AuthorizationController.logout()
+
+######
+#
+# STATIC ASSETS
+#
+######
+
+# Map static resources from the /public folder to the /assets URL path
+GET    /assets/*file               controllers.Assets.at(path="/public", file)
+
+######
+#
+# ANGULAR FALL THROUGH ROUTES
+#
+######
+
+# Redirect all unknown routes to index, required for angular
+GET    /dashboard/*any                 controllers.DashboardController.index(any)
+GET    /admin/*any                     controllers.AdministrationController.index(any)
+GET    /*any                           controllers.ApplicationController.index(any)

@@ -1,0 +1,38 @@
+<div class="row profile-container">
+    <div class="col-md-3 col-sm-3">
+        <img src="http://placehold.it/150x150" alt="image" class="img-circle">
+    </div>
+    <div class="col-md-9 col-sm-9">
+
+        <div class="row">
+            <div class="col-md-3">
+                <h3 contenteditable ng-model="user.firstName">{{user.firstName}}</h3>
+            </div>
+            <div class="col-md-3">
+                <h3 contenteditable ng-model="user.lastName">{{user.lastName}}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <small><p class="col-md-3">Member Since</p></small>
+            <small><p class="col-md-3">{{user.creationDate}}</p></small>
+        </div>
+
+        <div class="row">
+            <b class="col-md-3">Email</b>
+            <div class="col-md-5">
+                <p contenteditable ng-model="user.emailAddress">{{user.emailAddress}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <b class="col-md-3">Zip Code</b>
+            <p class="col-md-3" contenteditable ng-model="user.zipCode">{{user.zipCode}}</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-md-offset-3">
+                <button ng-click="save()" type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+@(title: String, version: String)
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@title</title>
+
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+    <!-- Bootstrap -->
+    <link href="@routes.Assets.at("components/bootstrap/dist/css/bootstrap.min.css")" rel="stylesheet">
+
+    <!-- Slick Carousel -->
+    <link href="@routes.Assets.at("components/slick.js/slick/slick.css")" rel="stylesheet">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+      <script>
+          document.flash = {
+            "referer": "@flash.get("referer")"
+          }
+      </script>
+    </head>
+    <body ng-cloak ng-app="main" ng-controller="ApplicationController">
+
+    <div class="container">
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <!-- User Menu Dropdown -->
+                <li ng-if="currentUser()" class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        {{currentUser().emailAddress}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="/profile">Profile</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="/settings">Settings</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="logOut()" href="#">Sign out</a></li>
+                    </ul>
+                </li>
+                <!-- /User Menu Dropdown -->
+                <li ng-if="currentUser() === null"><a href="/login">Login</a></li>
+                <li ng-if="currentUser() === null"><a href="/signup">Sign Up</a></li>
+            </ul>
+            <!-- Depending on if they are logged in, we give them a different main page, might be able to do this with routing -->
+            <h3 ng-if="currentUser()" class="text-muted"><a href="/now-playing">@title</a></h3>
+            <h3 ng-if="currentUser() === null" class="text-muted"><a href="/">@title</a></h3>
+        </div>
+
+        <div ng-if="currentUser()" > <!-- ng-controller="NowPlayingControlsController" -->
+            <player-controls></player-controls>
+        </div>
+
+        <div ng-controller="NotificationController" ng-cloak>
+            <alert  ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+        </div>
+
+        <!-- Main View -->
+        <ng-view ng-cloak></ng-view>
+        <!-- /Main View-->
+
+        <div class="footer">
+            <ul class="list-unstyled">
+                <li><p>© @title 2014</p></li>
+                <li>@version</li>
+            </ul>
+
+        </div>
+    </div> <!-- /container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="@routes.Assets.at("components/bootstrap/dist/js/bootstrap.js")"></script>
+    <script src="@routes.Assets.at("components/underscore/underscore.js")"></script>
+    <script src="@routes.Assets.at("components/angular/angular.js")"></script>
+    <script src="@routes.Assets.at("components/angular-route/angular-route.js")"></script>
+    <script src="@routes.Assets.at("components/angular-animate/angular-animate.js")"></script>
+    <script src="@routes.Assets.at("components/angular-resource/angular-resource.js")"></script>
+    <script src="@routes.Assets.at("components/angular-local-storage/dist/angular-local-storage.js")"></script>
+    <script src="@routes.Assets.at("components/angular-sanitize/angular-sanitize.js")"></script>
+
+    <!-- Bring in the App -->
+    <script src="@routes.Assets.at("app/app/main.js")"></script>
+    <script src="@routes.Assets.at("app/app/app.js")"></script>
+    <script src="@routes.Assets.at("app/menu/menu.js")"></script>
+    <script src="@routes.Assets.at("app/auth/auth.js")"></script>
+    <script src="@routes.Assets.at("app/login/login.js")"></script>
+    <script src="@routes.Assets.at("app/signup/signup.js")"></script>
+    <script src="@routes.Assets.at("app/notification/notification.js")"></script>
+    <script src="@routes.Assets.at("app/player/controls.js")"></script>
+    <script src="@routes.Assets.at("app/users/user.js")"></script>
+    <!--<script src="@routes.Assets.at("app/player/player.js")"></script>-->
+
+    </body>
+</html>

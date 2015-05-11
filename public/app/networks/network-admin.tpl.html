@@ -1,0 +1,25 @@
+<div class="row name-row">
+    <div class="col-sm-1">
+        <h4 class="name text-right">{{network.id}}</h4>
+    </div>
+    <div class="col-sm-8">
+        <h4 class="name text-left">{{network.name}}</h4>
+    </div>
+</div>
+
+<div class="row">
+    <dl class="dl-horizontal">
+        <dt>Added Date</dt>
+        <dd>{{network.creationDate | date : 'mediumDate'}}</dd>
+        <dt>Description</dt>
+        <dd>{{network.description}}</dd>
+        <dt>Website</dt>
+        <dd><a target="_blank" href="{{network.websiteUrl}}">{{show.websiteUrl}}</a></dd>
+        <dt>RSS</dt>
+        <dd><a target="_blank" href="{{network.rssFeedUrl}}">{{show.rssFeedUrl}}</a></dd>
+        <dt>JSON</dt>
+        <dd><a target="_blank" href="{{jsonUrl}}">{{jsonUrl}}</a></dd>
+    </dl>
+</div>
+
+<co-episode-list network="network.id"></co-episode-list>

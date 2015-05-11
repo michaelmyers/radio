@@ -1,0 +1,52 @@
+<div class="row name-row">
+    <div class="col-sm-1">
+        <h4 class="name text-right">{{show.id}}</h4>
+    </div>
+    <div class="col-sm-8">
+        <h4 class="name text-left">{{show.name}}</h4>
+    </div>
+    <div class="col-sm-3">
+        <button class="btn btn-default btn-sm" ng-click="import(show.rssFeedUrl)">Update</button>
+        <button class="btn btn-warning btn-sm">Disable</button>
+        <button class="btn btn-danger btn-sm">Delete</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">
+        <a href="{{show.imageUrl}}" class="thumbnail">
+            <img src="{{show.imageUrl}}" alt="...">
+        </a>
+    </div>
+
+    <div class="col-sm-8">
+        <dl class="dl-horizontal">
+            <dt>Show Type</dt>
+            <dd>{{show.showType}}</dd>
+            <dt>Added Date</dt>
+            <dd>{{show.creationDate | date : 'mediumDate'}}</dd>
+            <dt>Description</dt>
+            <dd>{{show.description}}</dd>
+            <dt>Network</dt>
+            <dd>{{show.network.name}}</dd>
+            <dt>Genre</dt>
+            <dd>
+                <ul class="list-inline">
+                    <li ng-repeat="genre in show.genres"><a href="/admin/genres/{{genre.id}}">{{genre.name}}{{$last ? '' : ', '}}</a></li>
+                </ul>
+            </dd>
+            <dt>Website</dt>
+            <dd><a target="_blank" href="{{show.websiteUrl}}">{{show.websiteUrl}}</a></dd>
+            <dt>RSS</dt>
+            <dd><a target="_blank" href="{{show.rssFeedUrl}}">{{show.rssFeedUrl}}</a></dd>
+            <dt>JSON</dt>
+            <dd><a target="_blank" href="{{jsonUrl}}">{{jsonUrl}}</a></dd>
+        </dl>
+    </div>
+</div>
+
+<co-episode-list show="show.id"></co-episode-list>
+
+
+
+

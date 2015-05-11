@@ -9,7 +9,7 @@ This file will be packaged with your application, when using `activator dist`.
 activator
 `brew install typesafe-activator`
 
-## Install Public Dependencies
+## Install Client-side Dependencies
 
 `cd public`
 `npm install`
